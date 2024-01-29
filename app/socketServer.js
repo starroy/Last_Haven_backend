@@ -1,10 +1,10 @@
-const http = require('http');
 const { Server } = require("socket.io");
 const mongoose = require('mongoose');
-const httpServer = http.createServer();
-const io = new Server(httpServer, {
+
+const createSocketServer = (httpServer) => {
+  const io = new Server(httpServer, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: "*",
       methods: ["GET", "POST"]
     }
   });
@@ -296,7 +296,9 @@ io.on('connection', (socket) => {
   });
 });
 
-const PORT = 8080;
-httpServer.listen(PORT, () => {
-  console.log(`Socket.IO server is running on port ${PORT}`);
-});
+// const PORT = 8080;
+// httpServer.listen(PORT, () => {
+//   console.log(`Socket.IO server is running on port ${PORT}`);
+// });
+}
+module.exports = createSocketServer;

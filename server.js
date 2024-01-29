@@ -1,4 +1,5 @@
 const express = require("express");
+const http = require('http');
 const cors = require("cors");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
@@ -6,8 +7,9 @@ const fileUpload = require('express-fileupload');
 
 const app = express();
 
+const server = http.createServer(app);
 app.use(fileUpload());
-require("./app/socketServer");
+require("./app/socketServer")(server);
 // require("./app/walletavatar")
 
 
@@ -54,8 +56,8 @@ require("./app/routes/chat.routes")(app);
 // require("./app/routes/image.routes")(app);
 
 // set port, listen for requests
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 6000;
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
